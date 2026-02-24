@@ -1,0 +1,78 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1{
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 5rem;
+}
+
+input{
+    position: absolute;
+    width: 50vw;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    height: 10vh;
+    font-size: 2rem;
+}
+
+#potrdi{
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #06d606c7;
+    position: absolute;
+    bottom: 75px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 3rem;
+    padding: 1rem 3rem;
+}
+#preveri{
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #ebebebdb;
+    position: absolute;
+    bottom: 200px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 3.2rem;
+    padding: 1rem 3rem;
+}
+
+
+#correctOrNot{
+    margin-top: 100px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+#racun{
+    font-size: 3rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+#start{
+    text-align: center;
+    width: 100%;
+    font-size: 3rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    position: absolute;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+}
