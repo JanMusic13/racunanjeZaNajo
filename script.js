@@ -14,19 +14,22 @@ let userAnswer = null
 let steviloRacuna = 0
 let correctAnswer = 0
 let allRacuni = []
+let current = null
+let canClick = true
 /////////////////////////////////////////////// TO V REPEAT POL
 ///////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
-
-potrdi.addEventListener("click", kokRacunov)
+again()
+function again() { potrdi.addEventListener("click", kokRacunov) }
 
 function kokRacunov() {
     potrdi.removeEventListener("click", kokRacunov)
     potrdi.style.display = "none"
     startText.textContent = "Spodaj vnesi odgovor in nato klikni zeleni gumb"
+    inputKolikoRacunov = Number(document.querySelector("input").value)
+    document.querySelector("input").value = ""
+    preveri.style.backgroundColor = "#06d606c7"
     setTimeout(() => {
-        preveri.style.backgroundColor = "#06d606c7"
-        inputKolikoRacunov = document.querySelector("input").value
         isActive = true
         calculate()
         return
@@ -36,6 +39,8 @@ function kokRacunov() {
 ///////////////////////////////////////////////////////////
 
 preveri.addEventListener("click", () => {
+    if (!canClick) return
+    canClick = false
     if (isActive) {
         if (isWrong) {
             Game()
@@ -44,10 +49,14 @@ preveri.addEventListener("click", () => {
             Game()
         }
     }
+    setTimeout(() => {
+        canClick = true
+    }, 2000);
 })
 //////////////////////////////////////////////////
 
 function calculate() {
+    document.querySelector("input").value = ""
     let plusOrMinus = Math.floor(Math.random() * 2) + 1
     let normalenOrPoseben = Math.floor(Math.random() * 2) + 1
     let prvoAliDrugoMesto = Math.floor(Math.random() * 2) + 1
@@ -59,14 +68,22 @@ function calculate() {
                 num1 = Math.floor(Math.random() * 21)
                 num2 = Math.floor(Math.random() * 21)
                 izracun = num1 + num2
-            } while (izracun >= 20); fullRacun = racunText.textContent = `${num1} + ${num2} = ?`; console.log("1, 1"); console.log(izracun); return
+            } while (izracun >= 20);
+            fullRacun = racunText.textContent = `${num1} + ${num2} = ?`;
+            current = { racun: fullRacun.replace("?", izracun), raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
+            allRacuni.push(current)
+            return
         }
         else {
             do {
                 num1 = Math.floor(Math.random() * 21)
                 num2 = Math.floor(Math.random() * 21)
                 izracun = num1 - num2
-            } while (izracun <= 0); fullRacun = racunText.textContent = `${num1} - ${num2} = ?`; console.log("1, 2"); console.log(izracun); return
+            } while (izracun <= 0);
+            fullRacun = racunText.textContent = `${num1} - ${num2} = ?`;
+            current = { racun: fullRacun.replace("?", izracun), raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
+            allRacuni.push(current)
+            return
         } /////////////////////////////////////////////////////////////////////////
     } else { //////////////////////// TO JE ZDJ POSEBEN
         if (prvoAliDrugoMesto === 1) {
@@ -75,7 +92,11 @@ function calculate() {
                     num1 = Math.floor(Math.random() * 21)
                     num2 = Math.floor(Math.random() * 21)
                     izracun = num2 - num1
-                } while (izracun <= 0); fullRacun = racunText.textContent = `? + ${num1} = ${num2}`; console.log("2, 1, 1"); console.log(izracun); return
+                } while (izracun <= 0);
+                fullRacun = racunText.textContent = `? + ${num1} = ${num2}`;
+                current = { racun: fullRacun.replace("?", izracun), raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
+                allRacuni.push(current)
+                return
             }
             else {
                 let num1 = null
@@ -84,7 +105,11 @@ function calculate() {
                     num1 = Math.floor(Math.random() * 21)
                     num2 = Math.floor(Math.random() * 21)
                     izracun = num1 + num2
-                } while (izracun > 20); fullRacun = racunText.textContent = `? - ${num1} = ${num2}`; console.log("2, 1, 2"); console.log(izracun); return
+                } while (izracun > 20);
+                fullRacun = racunText.textContent = `? - ${num1} = ${num2}`;
+                current = { racun: fullRacun.replace("?", izracun), raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
+                allRacuni.push(current)
+                return
             }
         } else {
             if (plusOrMinus === 1) {
@@ -94,7 +119,11 @@ function calculate() {
                     num1 = Math.floor(Math.random() * 21)
                     num2 = Math.floor(Math.random() * 21)
                     izracun = num2 - num1
-                } while (izracun < 0); fullRacun = racunText.textContent = `${num1} + ? = ${num2}`; console.log("2, 2, 1"); console.log(izracun); return
+                } while (izracun < 0);
+                fullRacun = racunText.textContent = `${num1} + ? = ${num2}`;
+                current = { racun: fullRacun.replace("?", izracun), raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
+                allRacuni.push(current)
+                return
             } else {
                 let num1 = null
                 let num2 = null
@@ -102,7 +131,11 @@ function calculate() {
                     num1 = Math.floor(Math.random() * 21)
                     num2 = Math.floor(Math.random() * 21)
                     izracun = num1 - num2
-                } while (izracun < 0); fullRacun = racunText.textContent = `${num1} - ? = ${num2}`; console.log("2, 2, 2"); console.log(izracun); return
+                } while (izracun < 0);
+                fullRacun = racunText.textContent = `${num1} - ? = ${num2}`;
+                current = { racun: fullRacun.replace("?", izracun), raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
+                allRacuni.push(current)
+                return
             }
         }
     }
@@ -118,10 +151,9 @@ function Game() {
         if (!isWrong) {
             steviloRacuna++
         }
-        console.log("stevilo racunov:", steviloRacuna)
         if (userAnswer == izracun) {
-            list(true)
-            correctAnswer++
+            current.isPravilen = true
+            current.userFinal = Number(userAnswer)
             correctOrNotText.textContent = "PRAVILNO!"
             racunText.textContent = ""
             isWrong = false
@@ -133,7 +165,8 @@ function Game() {
             }, 3000);
             return
         } else {
-            list(false)
+            current.wrongCount++
+            current.answers.push(Number(userAnswer))
             incorrect()
             return
         }
@@ -144,6 +177,7 @@ function Game() {
     }
 }
 function incorrect() {
+    document.querySelector("input").value = ""
     correctOrNotText.textContent = "Narobe! še enkrat!"
     racunText.textContent = ""
     setTimeout(() => {
@@ -158,14 +192,21 @@ function gameOver() {
     let finalTextPravilni = ""
     let finalTextNapacni = ""
     for (let i = 0; i < allRacuni.length; i++) {
-        if (allRacuni[i].isPravilen) {
+        if (allRacuni[i].wrongCount === 0) {
+            correctAnswer++
             finalTextPravilni += `${allRacuni[i].racun}; `
         } else {
-            finalTextNapacni += `${allRacuni[i].racun}; `
+            finalTextNapacni += `${allRacuni[i].racun} (x${allRacuni[i].wrongCount}); `
         }
-        document.body.innerHTML = `<p style="font-size: 30px; text-align: start;">Pravilni računi: ${finalTextPravilni}<br> Narobe rešeni računi: ${finalTextNapacni}<br> Skupno pravilnih racunov: ${correctAnswer} od ${inputKolikoRacunov}</p>`
     }
+    document.querySelector("#box").innerHTML = `<p style="font-size: clamp(1.5rem, 2vw, 3rem); text-align: start;">Pravilni računi: ${finalTextPravilni}<br> Narobe rešeni računi: ${finalTextNapacni}<br> Skupno pravilnih racunov: ${correctAnswer} od ${inputKolikoRacunov}</p>`
+    const startAgain = document.querySelector("#again")
+    startAgain.style.display = "block"
+    startAgain.addEventListener("click", () => {
+        location.reload();
+    })
 }
+
 
 function list(isPravilen) {
     let racunObject = {
