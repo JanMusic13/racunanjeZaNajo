@@ -194,9 +194,9 @@ function gameOver() {
     for (let i = 0; i < allRacuni.length; i++) {
         if (allRacuni[i].wrongCount === 0) {
             correctAnswer++
-            finalTextPravilni += `${allRacuni[i].racun}; `
+            finalTextPravilni += `${allRacuni[i].racunZUprasajem},  `
         } else {
-            finalTextNapacni += `${allRacuni[i].racun} (x${allRacuni[i].wrongCount}); `
+            finalTextNapacni += `${allRacuni[i].racunZUprasajem} odgovor: ${allRacuni[i].odgovorUporabnika} (x${allRacuni[i].wrongCount}); `
         }
     }
     document.querySelector("#box").innerHTML = `<p style="font-size: clamp(1.5rem, 2vw, 3rem); text-align: start;">Pravilni računi: ${finalTextPravilni}<br> Narobe rešeni računi: ${finalTextNapacni}<br> Skupno pravilnih racunov: ${correctAnswer} od ${inputKolikoRacunov}</p>`
@@ -211,6 +211,7 @@ function gameOver() {
 function list(isPravilen) {
     let racunObject = {
         racun: fullRacun.replace("?", izracun),
+        racunZUprasajem: fullRacun,
         odgovorUporabnika: userAnswer,
         isPravilen: isPravilen
     }
