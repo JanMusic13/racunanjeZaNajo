@@ -70,7 +70,7 @@ function calculate() {
                 izracun = num1 + num2
             } while (izracun >= 20);
             fullRacun = racunText.textContent = `${num1} + ${num2} = ?`;
-            current = { racun: fullRacun.replace("?", izracun), raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
+            current = { racun: fullRacun, raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
             allRacuni.push(current)
             return
         }
@@ -81,7 +81,7 @@ function calculate() {
                 izracun = num1 - num2
             } while (izracun <= 0);
             fullRacun = racunText.textContent = `${num1} - ${num2} = ?`;
-            current = { racun: fullRacun.replace("?", izracun), raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
+            current = { racun: fullRacun, raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
             allRacuni.push(current)
             return
         } /////////////////////////////////////////////////////////////////////////
@@ -94,7 +94,7 @@ function calculate() {
                     izracun = num2 - num1
                 } while (izracun <= 0);
                 fullRacun = racunText.textContent = `? + ${num1} = ${num2}`;
-                current = { racun: fullRacun.replace("?", izracun), raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
+                current = { racun: fullRacun, raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
                 allRacuni.push(current)
                 return
             }
@@ -107,7 +107,7 @@ function calculate() {
                     izracun = num1 + num2
                 } while (izracun > 20);
                 fullRacun = racunText.textContent = `? - ${num1} = ${num2}`;
-                current = { racun: fullRacun.replace("?", izracun), raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
+                current = { racun: fullRacun, raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
                 allRacuni.push(current)
                 return
             }
@@ -121,7 +121,7 @@ function calculate() {
                     izracun = num2 - num1
                 } while (izracun < 0);
                 fullRacun = racunText.textContent = `${num1} + ? = ${num2}`;
-                current = { racun: fullRacun.replace("?", izracun), raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
+                current = { racun: fullRacun, raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
                 allRacuni.push(current)
                 return
             } else {
@@ -133,7 +133,7 @@ function calculate() {
                     izracun = num1 - num2
                 } while (izracun < 0);
                 fullRacun = racunText.textContent = `${num1} - ? = ${num2}`;
-                current = { racun: fullRacun.replace("?", izracun), raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
+                current = { racun: fullRacun, raw: fullRacun, correct: izracun, wrongCount: 0, answers: [] };
                 allRacuni.push(current)
                 return
             }
@@ -160,6 +160,7 @@ function Game() {
             setTimeout(() => {
                 if (steviloRacuna < inputKolikoRacunov) {
                     calculate()
+                    document.querySelector("input").focus()
                 } else { gameOver() }
                 correctOrNotText.textContent = ""
             }, 3000);
@@ -194,9 +195,9 @@ function gameOver() {
     for (let i = 0; i < allRacuni.length; i++) {
         if (allRacuni[i].wrongCount === 0) {
             correctAnswer++
-            finalTextPravilni += `${allRacuni[i].racunZUprasajem},  `
+            finalTextPravilni += `${allRacuni[i].racun},  `
         } else {
-            finalTextNapacni += `${allRacuni[i].racunZUprasajem} odgovor: ${allRacuni[i].odgovorUporabnika} (x${allRacuni[i].wrongCount}); `
+            finalTextNapacni += `${allRacuni[i].racun} (x${allRacuni[i].wrongCount}); ` //odgovor: ${allRacuni[i].correct}
         }
     }
     document.querySelector("#box").innerHTML = `<p style="font-size: clamp(1.5rem, 2vw, 3rem); text-align: start;">Pravilni računi: ${finalTextPravilni}<br> Narobe rešeni računi: ${finalTextNapacni}<br> Skupno pravilnih racunov: ${correctAnswer} od ${inputKolikoRacunov}</p>`
@@ -205,16 +206,4 @@ function gameOver() {
     startAgain.addEventListener("click", () => {
         location.reload();
     })
-}
-
-
-function list(isPravilen) {
-    let racunObject = {
-        racun: fullRacun.replace("?", izracun),
-        racunZUprasajem: fullRacun,
-        odgovorUporabnika: userAnswer,
-        isPravilen: isPravilen
-    }
-    allRacuni.push(racunObject)
-    return
 }
